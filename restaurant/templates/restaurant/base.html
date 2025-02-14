@@ -1,0 +1,28 @@
+<!-- restaurant/templates/restaurant/base.html -->
+<!-- 
+    The base template for WcDonald's.
+    It provides a consistent layout for all pages, including a navigation bar and footer.
+-->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <title>{% block title %}Base{% endblock %}</title>
+       <link rel="stylesheet" href="{% static 'restaurant/styles.css' %}">
+    </head>
+
+    <body>
+        <!-- Contain page specific content -->
+        <nav>
+            <ul>
+                <li><a href="{% url 'main_page' %}">Main</a></li>
+                <li><a href="{% url 'order_page' %}">Order</a></li>
+            </ul>
+        </nav>
+        {% block content %}
+        {% endblock %}
+        <footer>
+            <p>Copyright ©2025 | Designed by Decheng Zheng</p>
+        </footer>
+    </body>
+</html>

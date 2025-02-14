@@ -1,0 +1,41 @@
+{% extends 'restaurant/base.html' %}
+<!-- restaurant/templates/restaurant/main.html -->
+<!-- 
+    This template is used to display the main page of WcDonald's.
+    It includes a section with the restaurant's image,
+    name, and tagline, as well as the location and hours of operation.
+-->
+
+{% block title %}Main Page{% endblock %}
+{% block content %}
+<div class="hero-section">
+    <img src="{{image}}" alt="WcDonald's" class="hero-image">
+    <h1 class="restaurant-name">WcDonald's</h1>
+    <h2 class="restaurant-tagline">Experience the Flavor</h2>
+</div>
+
+<main class="main-content">
+    <section class="location-section">
+        <h2>Location</h2>
+        <p>123 Main Street, WcDonaldland</p>
+    </section>
+
+    <section class="hours-section">
+        <h2>Hours of Operation</h2>
+        <table class="hours-table">
+            <tr>
+                <td>Monday - Friday</td>
+                <td>11:00 AM - 10:00 PM</td>
+            </tr>
+            <tr>
+                <td>Saturday</td>
+                <td>10:00 AM - 11:00 PM</td>
+            </tr>
+            <tr>
+                <td>Sunday</td>
+                <td>10:00 AM - 9:00 PM</td>
+            </tr>
+        </table>
+    </section>
+</main>
+{% endblock %}

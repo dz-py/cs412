@@ -1,0 +1,24 @@
+{% extends 'quotes/base.html' %}
+{% block title %}Show All{% endblock %}
+
+{% block content %}
+<div class="quote-container" style="max-width: 860px;">
+    <h1 class="quote-title">All Quotes and Images</h1>
+    
+    <div class="quote-content" style="flex-direction: column;">
+        <!-- Quotes Section -->
+        <div class="quote-text">
+            {% for i in quote %}
+                <p>"{{i}}"</p><br>
+            {% endfor %}
+        </div>
+        
+        <!-- Images Section -->
+        <div class="quote-image" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem; flex: 1; width: 100%;">
+            {% for i in image %}
+            <img src="{{ i }}" alt="Steve Jobs">
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

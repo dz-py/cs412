@@ -1,0 +1,91 @@
+<!-- restaurant/templates/restaurant/order.html -->
+<!-- 
+    Display the order page of WcDonald's.
+    It includes a form for customers to place their orders.
+    The form allows customers to select menu items, add special instructions, and provide
+    their contact information.
+-->
+
+{% extends 'restaurant/base.html' %}
+{% block title %}Order Page{% endblock %}
+
+{% block content %}
+<div class="order-wrapper">
+    <h2 class="page-title">Place an Order</h2>
+
+    <form id="order-form" action="{% url 'confirmation_page' %}" method="POST">
+        {% csrf_token %}
+        
+        <div class="menu-section">
+            <h3 class="section-title">Select your Items:</h3>
+
+            <div class="menu-item">
+                <input type="checkbox" id="burger" name="burger" onChane="toggleOptions()">
+                <label for="burger">WcDouble Burger $8 (Must have pickle)</label>
+            </div>
+            <div class="menu-item">
+                <input type="checkbox" id="bigburger" name="bigburger" onchange="toggleOptions()">
+                <label for="bigburger">Big WcDouble Burger $10</label>
+                <div id="bigburger-options" class="options" style="display: none; margin-left: 20px;">
+                    <input type="checkbox" id="no_pickle" name="bigburger_no_pickle">
+                    <label for="no_pickle">No Pickle</label>
+                </div>
+            </div>
+            <div class="menu-item">
+                <input type="checkbox" id="fries" name="fries">
+                <label for="fries">French Fries $4</label>
+            </div>
+            <div class="menu-item">
+                <input type="checkbox" id="drink" name="drink">
+                <label for="drink">Soft Drink $2</label>
+            </div>
+        </div>
+
+        <div class="special-section">
+            <h3 class="section-title">Today's Special (Free):</h3>
+            <div class="menu-item">
+                <input type="checkbox" id="special" name="daily_special">
+                <label for="daily_special">{{ daily_special }}</label>
+            </div>
+        </div>
+
+        <div class="instructions-section">
+            <h3 class="section-title">Special Instructions</h3>
+            <div class="input-group">
+                <label for="special_instructions">Please share any special instructions:</label>
+                <textarea id="special_instructions" name="special_instructions" rows="3" cols="60"></textarea>
+            </div>
+        </div>
+
+        <div class="customer-section">
+            <h3 class="section-title">Customer Information</h3>
+            <div class="input-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="input-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+        </div>
+
+        <div class="submit-section">
+            <h3 class="section-title">Place your order!</h3>
+            <button type="submit" class="submit-button">Submit Order</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function toggleOptions() {
+        const bigburgerCheckbox = document.getElementById("bigburger");
+        const optionsDiv = document.getElementById("bigburger-options");
+        optionsDiv.style.display = bigburgerCheckbox.checked ? "block" : "none";
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+<!-- restaurant/templates/restaurant/confirmation.html -->
+<!-- 
+    This template is used to display the order confirmation page.
+    It provides details about the customer's order,
+    including the items ordered, total price, customer information, 
+    special instructions, and the estimated ready time.
+-->
+
+{% extends 'restaurant/base.html' %}
+{% block title %}Order Confirmation{% endblock %}
+
+{% block content %}
+<div class="confirmation-wrapper">
+    <h2>Order Confirmation</h2>
+
+    <div class="order-details">
+        <h3>Your Order Items:</h3>
+        <ul>
+            {% if burger %}
+                <li>WcDouble Burger - $8</li>
+            {% endif %}
+            {% if bigburger %}
+                <li>Big WcDouble Burger - $10
+                    {% if bigburger_no_pickle %}
+                        <ul><li>No Pickle</li></ul>
+                    {% endif %}
+                </li>
+            {% endif %}
+            {% if fries %}
+                <li>French Fries - $4</li>
+            {% endif %}
+            {% if drink %}
+                <li>Soft Drink - $2</li>
+            {% endif %}
+            {% if daily_special %}
+                <li>{{ daily_special_name }} - Free</li>
+            {% endif %}
+        </ul>
+
+        <p class="total-price">Total Price: ${{ total_price }}</p>
+    </div>
+
+    <div class="customer-details">
+        <h3>Customer Information:</h3>
+        <p>Name: {{ name }}</p>
+        <p>Phone: {{ phone }}</p>
+        <p>Email: {{ email }}</p>
+    </div>
+
+    {% if special_instructions %}
+    <div class="special-instructions">
+        <h3>Special Instructions:</h3>
+        <p>{{ special_instructions }}</p>
+    </div>
+    {% endif %}
+
+    <div class="ready-time">
+        <h3>Estimated Ready Time:</h3>
+        <p>Your order will be ready at: {{ ready_time }}</p>
+    </div>
+</div>
+{% endblock %}

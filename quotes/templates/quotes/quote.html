@@ -1,0 +1,21 @@
+{% extends 'quotes/base.html' %}
+{% block title %}Quote of The Day{% endblock %}
+
+    {% block content %}
+    <div class="quote-container">
+        <h1 class="quote-title">Quote of The Day from Steve Jobs</h1>
+        
+        <div class="quote-content">
+            <div class="quote-text">
+                <blockquote>
+                    {{quote}}
+                </blockquote>
+            </div>
+            
+            <div class="quote-image">
+                <img src="{{image}}" alt="Steve Jobs">
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
