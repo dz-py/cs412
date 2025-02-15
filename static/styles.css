@@ -144,3 +144,319 @@ footer {
         margin: 0.5rem 1rem; 
     }
 }
+
+/* a4 */
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f7fafc;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+nav {
+    background-color: #2d3748;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    list-style: none;
+    display: flex;
+    justify-content: center; 
+    gap: 4rem; 
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.5rem; 
+    border-radius: 4px;
+}
+
+nav ul li a:hover {
+    background-color: #4a5568;
+}
+
+.hero-section {
+    position: relative;
+    height: 60vh;
+    min-height: 400px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7);
+}
+
+.restaurant-name {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.restaurant-tagline {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    flex: 1;
+}
+
+.about-section,
+.location-section,
+.hours-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #2d3748;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+}
+
+p {
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.hours-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.hours-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.hours-table td:first-child {
+    font-weight: 600;
+    width: 40%;
+}
+
+footer {
+    background-color: #2d3748;
+    color: #ffffff;
+    padding: 1.5rem 0;
+    text-align: center;
+    margin-top: auto;
+}
+
+footer p {
+    color: #ffffff;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+
+
+/* 
+Order Form Style -------------------------------------------------------------------------------------------------------------------
+*/
+.order-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-title {
+    color: #2d3748;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.section-title {
+    color: #4a5568;
+    margin: 20px 0 15px;
+    font-size: 1.2em;
+}
+
+#order-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-section,
+.special-section,
+.instructions-section,
+.customer-section,
+.submit-section {
+    margin-bottom: 30px;
+}
+
+.menu-item {
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.menu-item:hover {
+    background-color: #f7fafc;
+}
+
+.menu-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.menu-item label {
+    cursor: pointer;
+    color: #4a5568;
+}
+
+.input-group {
+    margin: 15px 0;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #4a5568;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.input-group textarea {
+    resize: vertical;
+}
+
+.submit-button {
+    background-color: #2d3748;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #4a5568;
+}
+
+
+/* 
+Confirmation Page Styles ----------------------------------------------------------------------------------------------------------
+*/
+.confirmation-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.confirmation-wrapper h2 {
+    color: #2d3748;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.order-details,
+.customer-details,
+.special-instructions,
+.ready-time {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-wrapper h3 {
+    color: #4a5568;
+    margin-bottom: 15px;
+}
+
+.order-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.order-details li {
+    padding: 8px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.total-price {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #2d3748;
+    font-size: 1.2em;
+}
+
+.customer-details p,
+.special-instructions p {
+    margin: 10px 0;
+    color: #4a5568;
+}
+
+.ready-time {
+    background-color: #8caadf;
+    color: white;
+}
+
+.ready-time h3 {
+    color: white;
+}
+
+.ready-time p {
+    font-size: 1.2em;
+    font-weight: bold;
+}
