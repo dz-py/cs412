@@ -135,5 +135,5 @@ import socket
 CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
-    STATIC_URL = '/username/static/'
-    MEDIA_URL = '/username/media/'
+    STATIC_URL = '/dechengz/static/'
+    MEDIA_URL = '/dechengz/media/'
