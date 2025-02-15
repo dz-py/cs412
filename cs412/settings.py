@@ -121,16 +121,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-import os
-STATIC_URL = 'static/dechengz' # note: no leading slash
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/' # note: no leading slash!
 
-# Add app-specific static directories
 STATICFILES_DIRS = [
-    ('quotes', os.path.join(BASE_DIR, 'quotes', 'static')),
-    ('restaurant', os.path.join(BASE_DIR, 'restaurant', 'static')),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL = "media/"  # note: no leading slash!
+MEDIA_URL= "media/"  # note: no leading slash!
 
+import socket
+CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
+
+if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
+    STATIC_URL = '/username/static/'
+    MEDIA_URL = '/username/media/'
