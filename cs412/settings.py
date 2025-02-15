@@ -1,3 +1,4 @@
+
 """
 Django settings for cs412 project.
 
@@ -120,23 +121,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-import socket
-CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
-
-# Static files configuration
+import os
+STATIC_URL = 'static/' # note: no leading slash
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
-    STATIC_URL = '/dechengz/static/'
-    MEDIA_URL = '/dechengz/media/'  # Changed this to avoid conflict
-else:
-    STATIC_URL = '/static/'
-    MEDIA_URL = '/media/'  # Changed this to avoid conflict
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Add app-specific static directories
 STATICFILES_DIRS = [
     ('quotes', os.path.join(BASE_DIR, 'quotes', 'static')),
     ('restaurant', os.path.join(BASE_DIR, 'restaurant', 'static')),
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = "media/"  # note: no leading slash!
+
