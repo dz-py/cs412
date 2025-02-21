@@ -12,6 +12,9 @@ class Profile(models.Model):
     city = models.TextField(blank=True)
     email = models.TextField(blank=True)
     address = models.TextField(blank=True)
-    # profile image is just a www link to the image
+    # profile image is just a www url to the image
     profile_image = models.TextField(blank=True)
 
+    def __str__(self):
+        ''' Return a string representation of the profile '''
+        return f'{self.first_name} {self.last_name}'

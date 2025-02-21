@@ -1,0 +1,191 @@
+/* This is a universal styling sheet that does not require classes or ids*/
+
+/* Universal Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Smooth scrolling for better UX */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Body Styling */
+  body {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    background-color: #f4f7fc;
+    color: #222;
+    padding: 40px;
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.75rem; }
+  h4 { font-size: 1.5rem; }
+  h5 { font-size: 1.25rem; }
+  h6 { font-size: 1.1rem; }
+  
+  /* Paragraphs */
+  p {
+    margin-bottom: 20px;
+    color: #444;
+  }
+  
+  /* Links */
+  a {
+    color: #0072f5;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  a:hover {
+    color: #004ea3;
+    text-decoration: underline;
+  }
+  
+  /* Lists */
+  ul, ol {
+    padding-left: 25px;
+    margin-bottom: 20px;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  /* Buttons */
+  button, .button {
+    display: inline-block;
+    background-color: #0072f5;
+    color: white;
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button:hover, .button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Forms */
+  input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    border-color: #0072f5;
+  }
+  
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #0072f5;
+    color: white;
+    text-align: left;
+  }
+  
+  /* Code Blocks */
+  code, pre {
+    background-color: #f0f2f5;
+    font-family: "Courier New", monospace;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  pre {
+    padding: 12px;
+    overflow-x: auto;
+  }
+  
+  /* Blockquotes */
+  blockquote {
+    border-left: 4px solid #0072f5;
+    padding-left: 15px;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
+    color: #777;
+  }
+
+  /* Tables */
+table {
+    width: 90%; 
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 20px auto; 
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center; 
+    vertical-align: middle; 
+  }
+  
+  th {
+    background-color: #0072f5;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Zebra striping for rows */
+  tr:nth-child(even) {
+    background-color: #f4f7fc;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    body {
+      padding: 20px;
+    }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+  }
+  

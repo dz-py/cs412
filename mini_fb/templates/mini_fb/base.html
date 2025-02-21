@@ -1,0 +1,22 @@
+<!-- mini-fb/base.html -->
+<!-- 
+    The base template for mini-fb.
+    It provides a consistent layout for all pages, including a navigation bar and footer.
+-->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <title>{% block title %}Base{% endblock %}</title>
+       <link rel="stylesheet" type="text/css" href="{% static 'styles-mini-fb.css' %}">
+    </head>
+
+    <body>
+        <!-- Contain page specific content -->
+        {% block content %}
+        {% endblock %}
+        <footer>
+            <p>Copyright ©2025 | Designed by Decheng Zheng</p>
+        </footer>
+    </body>
+</html>
