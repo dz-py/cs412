@@ -32,4 +32,21 @@
     </tbody>
 </table>
 
+<!-- Link to create a new status message -->
+<p><a href="{% url 'create_status' pk=profile.pk %}">Create a Status Message</a></p>
+
+<!-- Display status messages -->
+<h2>Status Messages</h2>
+<div class="status-messages">
+    {% for message in profile.get_status_messages %}
+        <div class="status-message">
+            <hr>
+            <p>{{ message.message }}</p>
+            <p class="timestamp">{{ message.timestamp }}</p>
+        </div>
+    {% empty %}
+        <p>No status messages yet.</p>
+    {% endfor %}
+</div>
+
 {% endblock %}

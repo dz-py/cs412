@@ -1,7 +1,8 @@
 # mini_fb/models.py
 # define data models for the mini_fb app
 from django.db import models
-
+from django.urls import reverse
+                  
 # Create your models here.
 class Profile(models.Model):
     ''' Encapsulate the data of a user profile '''
@@ -18,3 +19,23 @@ class Profile(models.Model):
     def __str__(self):
         ''' Return a string representation of the profile '''
         return f'{self.first_name} {self.last_name}'
+    
+    def get_status_messages(self):
+        ''' Return the status messages of this profile and order them by timestamp '''
+        return StatusMessage.objects.filter(profile=self).order_by('-timestamp')
+    
+    def get_absolute_url(self):
+        ''' Return a URL to display this profile object '''
+        return reverse('show_profile', kwargs={'pk': self.pk})
+    
+class StatusMessage(models.Model):
+    ''' Encapsulate the data of a status message '''
+
+    # define the fields of the status message 
+    timestamp = models.DateTimeField(auto_now_add=True) 
+    message = models.TextField(blank=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        ''' Return a string representation of the status message '''
+        return f'{self.timestamp} {self.message}'

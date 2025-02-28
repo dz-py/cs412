@@ -1,0 +1,20 @@
+<!-- mini_fb/create_profile_form.html -->
+<!-- Allow users to create their profile -->
+
+{% extends 'mini_fb/base.html' %}
+
+{% block title %}Create Profile{% endblock %}
+
+{% block content %}
+<h2>Create a New Profile</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        {{ form.as_p }}
+        <button type="submit">Create Profile</button>
+    </div>
+</form>
+
+<p><a href="{% url 'show_all_profiles' %}">Back to All Profiles</a></p>
+{% endblock %}
