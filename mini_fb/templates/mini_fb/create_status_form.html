@@ -1,0 +1,20 @@
+<!-- mini_fb/create_status_form.html -->
+<!-- Allow users to create status message -->
+
+{% extends 'mini_fb/base.html' %}
+
+{% block title %}Create Status Message{% endblock %}
+
+{% block content %}
+<h2>Create a new status message for {{ profile.first_name }} {{ profile.last_name }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        {{ form.as_p }}
+        <button type="submit">Create Message</button>
+    </div>
+</form>
+
+<p><a href="{% url 'show_profile' pk=profile.pk %}">Back to Profile</a></p>
+{% endblock %}
