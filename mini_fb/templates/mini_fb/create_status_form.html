@@ -17,5 +17,7 @@
     </div>
 </form>
 
-<p><a href="{% url 'show_profile' pk=profile.pk %}">Back to Profile</a></p>
+<form method="GET" action="{% url 'show_profile' pk=profile.pk %}">
+    <button type="submit">Cancel</button>
+</form>
 {% endblock %}

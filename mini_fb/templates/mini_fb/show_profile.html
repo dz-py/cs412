@@ -54,10 +54,20 @@
                     {% endif %}
                 </div>
             {% endfor %}
+
+            <!-- Delete status message link -->
+            <div>
+                <a href="{% url 'delete_status' pk=message.pk %}">Delete</a>
+            </div>
+
+            <!-- Update status message link -->
+            <div>
+                <a href="{% url 'update_status' pk=message.pk %}">Update</a>
+            </div>
+            
         </div>
     {% empty %}
         <p>No status messages yet.</p>
     {% endfor %}
 </div>
-
 {% endblock %}
