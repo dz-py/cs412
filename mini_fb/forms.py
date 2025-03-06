@@ -27,3 +27,16 @@ class CreateStatusMessageForm(forms.ModelForm):
         ''' Define the model and fields for the form'''
         model = StatusMessage
         fields = ['message']
+
+class UpdateProfileForm(forms.ModelForm):
+    ''' Define a form for updating a profile '''
+    
+    city = forms.CharField(label="City", required=False)
+    email = forms.CharField(label="Email", required=False)
+    address = forms.CharField(label="Address", required=False)
+    profile_image = forms.CharField(label="Profile Image URL", required=False)
+
+    class Meta:
+        ''' Define the model and fields for the form '''
+        model = Profile
+        fields = ['city', 'email', 'address', 'profile_image']
