@@ -90,11 +90,11 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'  # note: no leading slash!
+STATIC_URL = 'static/'  # changed to 'static/' from '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files
-MEDIA_URL = 'media/'  # note: no leading slash!
+MEDIA_URL = 'media/'  # changed to 'media/' from '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Additional locations of static files

@@ -43,6 +43,16 @@
             <hr>
             <p>{{ message.message }}</p>
             <p class="timestamp">{{ message.timestamp }}</p>
+            
+            <!-- Display images associated with this status message -->
+            {% for img in message.get_images %}
+                <div class="status-image">
+                    <img src="{{ img.image_file.url }}" alt="Status image" width="200">
+                    {% if img.caption %}
+                        <p class="caption">{{ img.caption }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
         </div>
     {% empty %}
         <p>No status messages yet.</p>

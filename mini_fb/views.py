@@ -3,7 +3,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse
-from .models import Profile, StatusMessage
+from .models import Profile, StatusMessage, Image, StatusImage
 from .forms import CreateProfileForm, CreateStatusMessageForm
 
 # Create your views here.
@@ -55,8 +55,27 @@ class CreateStatusMessageView(CreateView):
         profile = Profile.objects.get(pk=profile_pk)
         # Associate this status message with this profile
         form.instance.profile = profile
+        # Save the status message to database
+        sm = form.save()
+        # Read the files from the form
+        files = self.request.FILES.getlist('files')
+        # Process each uploaded file
+        for file in files:
+            # Create a new Image object
+            image = Image(
+                profile=profile,
+                image_file=file
+            )
+            image.save()
+            status_image = StatusImage(
+                status_message=sm,
+                image=image
+            )
+            status_image.save()
+        
         # Call parent method to finish the creation
         return super().form_valid(form)
+
     
     def get_success_url(self):
         '''Return a URL to which we should be directed after the form is successfully submitted'''
