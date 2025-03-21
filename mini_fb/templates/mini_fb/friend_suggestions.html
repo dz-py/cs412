@@ -1,0 +1,38 @@
+<!-- /mini_fb/friend_suggestions.html -->
+<!-- Shows friend suggestions based on the current profile -->
+
+{% extends 'mini_fb/base.html' %}
+
+{% block title %}Friend Suggestions for {{ profile.first_name }}{% endblock %}
+
+{% block content %}
+<h1>People {{ profile.first_name }} {{ profile.last_name }} may know:</h1>
+
+<!-- Link back to profile page -->
+<p><a href="{% url 'show_profile' pk=profile.pk %}">Back to {{ profile.first_name }}'s Profile</a></p>
+
+<div class="friend-suggestions">
+    {% for suggestion in profile.get_friend_suggestions %}
+        <div class="suggestion" style="display: inline-block; margin: 10px; text-align: center; border: 2px solid navy; border-radius: 10px; padding: 5px;">
+            <!-- Add Friend button -->
+            <a href="{% url 'add_friend' pk=profile.pk other_pk=suggestion.pk %}" style="display: inline-block; background-color: navy; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">Add Friend</a>
+            
+            <!-- Profile image -->
+            <div style="margin: 10px; border: 1px solid navy;">
+                {% if suggestion.profile_image %}
+                    <img src="{{ suggestion.profile_image }}" alt="Profile Image of {{ suggestion.first_name}} {{ suggestion.last_name}}" width="200">
+                {% else %}
+                    <div style="width: 200px; height: 200px; background-color: #eee; display: flex; align-items: center; justify-content: center;">No Image</div>
+                {% endif %}
+            </div>
+            
+            <!-- Profile name -->
+            <div style="background-color: navy; color: white; padding: 5px;">
+                <a href="{% url 'show_profile' pk=suggestion.pk %}" style="color: white; text-decoration: none;">{{ suggestion.first_name }} {{ suggestion.last_name }}</a>
+            </div>
+        </div>
+    {% empty %}
+        <p>No friend suggestions available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

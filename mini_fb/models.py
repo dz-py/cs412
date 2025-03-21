@@ -28,6 +28,69 @@ class Profile(models.Model):
         ''' Return a URL to display this profile object '''
         return reverse('show_profile', kwargs={'pk': self.pk})
     
+    def get_friends(self):
+        ''' Return a list of friend's profiles '''
+        # find all Friend objects where this profile is either profile1 or profile2
+        friends_as_profile1 = Friend.objects.filter(profile1=self)
+        friends_as_profile2 = Friend.objects.filter(profile2=self)
+        
+        # create a list of the friend's profiles
+        friend_profiles = []
+        for friend in friends_as_profile1:
+            friend_profiles.append(friend.profile2)
+        for friend in friends_as_profile2:
+            friend_profiles.append(friend.profile1)
+        
+        return friend_profiles
+    
+    def add_friend(self, other):
+        '''Add a friend relationship between profiles if not already exists'''
+        # can't friend yourself
+        if self == other:
+            return None
+        
+        # check if friendship already exists in either direction
+        existing = Friend.objects.filter(
+            models.Q(profile1=self, profile2=other) | 
+            models.Q(profile1=other, profile2=self)
+        ).first()
+        
+        if existing:
+            return existing
+        
+        # create new friendship
+        friendship = Friend(profile1=self, profile2=other)
+        friendship.save()
+        return friendship
+    
+    def get_friend_suggestions(self):
+        ''' Return a list of profiles that could be suggested as friends '''
+        current_friends = self.get_friends()
+        
+        # get all profiles except self
+        all_other_profiles = Profile.objects.exclude(pk=self.pk)
+        
+        # filter out profiles that are already friends
+        suggestions = [profile for profile in all_other_profiles if profile not in current_friends]
+        
+        return suggestions
+    
+    def get_news_feed(self):
+        """
+        Return all status messages from this profile and all of its friends,
+        ordered by timestamp with the most recent first.
+        """
+        # get friends of this profile
+        friends = self.get_friends()
+        
+        # add self to the list of profiles whose messages we want
+        profiles = [self] + friends
+        
+        # get all status messages from these profiles
+        news_feed = StatusMessage.objects.filter(profile__in=profiles).order_by('-timestamp')
+        
+        return news_feed
+    
 class StatusMessage(models.Model):
     ''' Encapsulate the data of a status message '''
 
@@ -72,3 +135,15 @@ class StatusImage(models.Model):
         ''' Return a string representation of the status image '''
         return f'StatusImage: {self.status_message} - {self.image}'
     
+
+class Friend(models.Model):
+    ''' Encapsulates the idea of an edge connecting two nodes within the social network '''
+
+    # define the fields of the friend model
+    profile1 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile1")
+    profile2 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile2")
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        ''' Return a string representation of the friend model '''
+        return f'{self.profile1} & {self.profile2}'

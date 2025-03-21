@@ -1,0 +1,54 @@
+<!-- mini_fb/news_feed.html -->
+<!-- Shows the news feed for a single Profile -->
+{% extends 'mini_fb/base.html' %}
+
+{% block title %}News Feed for {{ profile.first_name }}{% endblock %}
+
+{% block content %}
+<h1>News Feed for {{ profile.first_name }} {{ profile.last_name }}</h1>
+
+<!-- Link back to profile page -->
+<p><a href="{% url 'show_profile' pk=profile.pk %}">Back to {{ profile.first_name }}'s Profile</a></p>
+
+<div class="news-feed">
+    {% for message in profile.get_news_feed %}
+        <div class="status-message" style="border: 2px solid #ddd; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+            <!-- Profile info of the poster -->
+            <div class="message-author">
+                {% if message.profile.profile_image %}
+                    <img src="{{ message.profile.profile_image }}" alt="Profile Image of {{ message.profile.first_name}} {{ message.profile.last_name}}" width="50">
+                {% else %}
+                    <div>No Image</div>
+                {% endif %}
+                <a href="{% url 'show_profile' pk=message.profile.pk %}">
+                    {{ message.profile.first_name }} {{ message.profile.last_name }}
+                </a>
+            </div>
+            
+            <!-- Status message content -->
+            <p>{{ message.message }}</p>
+            <p class="timestamp">{{ message.timestamp }}</p>
+            
+            <!-- Display images associated with this status message -->
+            {% for img in message.get_images %}
+                <div class="status-image">
+                    <img src="{{ img.image_file.url }}" alt="Status image" width="200">
+                    {% if img.caption %}
+                        <p class="caption">{{ img.caption }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <!-- Delete or update profile's own message -->
+            {% if message.profile.pk == profile.pk %}
+                <div class="message-actions">
+                    <a href="{% url 'delete_status' pk=message.pk %}">Delete</a>
+                    <a href="{% url 'update_status' pk=message.pk %}">Update</a>
+                </div>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No status messages in your news feed yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

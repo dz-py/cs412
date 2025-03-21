@@ -1,9 +1,9 @@
 # mini_fb/views.py
 # define views for the mini_fb app
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse
-from .models import Profile, StatusMessage, Image, StatusImage
+from .models import Profile, StatusMessage, Image, StatusImage, Friend
 from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm, UpdateProfileStatusForm
 
 # Create your views here.
@@ -113,3 +113,34 @@ class UpdateStatusMessageView(UpdateView):
         profile = self.object.profile
         return reverse('show_profile', kwargs={'pk': profile.pk})
 
+class CreateFriendView(View):
+    '''Define a view class that creates a friend relationship between two profiles'''
+    
+    def dispatch(self, request, *args, **kwargs):
+        '''Process the request to add a friend relationship'''
+        # get the profile doing the friending (current user profile)
+        profile_pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=profile_pk)
+        
+        # get the profile to add as a friend
+        other_pk = self.kwargs['other_pk']
+        other_profile = Profile.objects.get(pk=other_pk)
+        
+        # add the friend relationship
+        profile.add_friend(other_profile)
+        
+        # redirect back to the current user's profile page after done adding friend
+        return redirect(reverse('show_profile', kwargs={'pk': profile_pk}))
+    
+
+class ShowFriendSuggestionsView(DetailView):
+    ''' Define a view class that shows friend suggestions for a profile '''
+    model = Profile
+    template_name = 'mini_fb/friend_suggestions.html'
+    context_object_name = 'profile'
+
+class ShowNewsFeedView(DetailView):
+    """Display the news feed for a profile."""
+    model = Profile
+    template_name = 'mini_fb/news_feed.html'
+    context_object_name = 'profile'

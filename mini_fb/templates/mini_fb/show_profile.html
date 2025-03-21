@@ -36,6 +36,26 @@
 <p><a href="{% url 'create_status' pk=profile.pk %}">Create a Status Message</a></p>
 <p><a href="{% url 'update_profile' pk=profile.pk %}">Update Profile</a></p>
 
+
+<!-- Profile's friends -->
+<h2>{{profile.first_name}}'s friends</h2>
+<ul>
+    {% for friend in profile.get_friends %}
+        <li>
+            <img src="{{ friend.profile_image }}" alt="Profile Image of {{ friend.first_name }} {{ friend.last_name }}" width="50">
+            <a href="{% url 'show_profile' pk=friend.pk %}">{{ friend.first_name }} {{ friend.last_name }}</a>
+        </li>
+    {% empty %}
+        <li>No friends yet.</li>
+    {% endfor %}
+</ul>
+
+<!-- Link to view friend suggestions -->
+<p><a href="{% url 'friend_suggestions' pk=profile.pk %}">See Friend Suggestions</a></p>
+
+<!-- Link to view the news feed -->
+<p><a href="{% url 'news_feed' pk=profile.pk %}">View News Feed</a></p>
+
 <!-- Display status messages -->
 <h2>Status Messages</h2>
 <div class="status-messages">
