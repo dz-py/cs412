@@ -3,8 +3,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse
-from .models import Profile, StatusMessage, Image, StatusImage, Friend
+from .models import Profile, StatusMessage, Image, StatusImage
 from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm, UpdateProfileStatusForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 class ShowAllProfilesView(ListView):
@@ -31,7 +32,7 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
 
-class CreateStatusMessageView(CreateView):
+class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     ''' Define a view class that creates a new status message '''
     model = StatusMessage
     form_class = CreateStatusMessageForm
@@ -84,13 +85,13 @@ class CreateStatusMessageView(CreateView):
         # Reverse to profile page for this profile
         return reverse('show_profile', kwargs={'pk': profile_pk})
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
     ''' Define a view class that updates a profile '''
     model = Profile
     form_class = UpdateProfileForm
     template_name = 'mini_fb/update_profile_form.html'
 
-class DeleteStatusMessageView(DeleteView):
+class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
     ''' Define a view class that deletes a status message '''
     model = StatusMessage
     context_object_name = 'status_message'
@@ -101,7 +102,7 @@ class DeleteStatusMessageView(DeleteView):
         profile = self.object.profile
         return reverse('show_profile', kwargs={'pk': profile.pk})
     
-class UpdateStatusMessageView(UpdateView):
+class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
     ''' Define a view class that updates a status message '''
     model = StatusMessage
     context_object_name = 'status_message'
@@ -113,7 +114,7 @@ class UpdateStatusMessageView(UpdateView):
         profile = self.object.profile
         return reverse('show_profile', kwargs={'pk': profile.pk})
 
-class CreateFriendView(View):
+class CreateFriendView(LoginRequiredMixin, View):
     '''Define a view class that creates a friend relationship between two profiles'''
     
     def dispatch(self, request, *args, **kwargs):

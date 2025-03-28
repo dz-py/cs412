@@ -1,12 +1,7 @@
-<!-- mini_fb/show_profile.html -->
-<!-- Shows the profile data for a single profile -->
 {% extends 'mini_fb/base.html' %}
-
 {% block title %}Profile{% endblock %}
-
 {% block content %}
 <h1>{{profile.first_name}} {{profile.last_name}}</h1>
-
 <table border="1">
     <thead>
         <tr>
@@ -32,10 +27,13 @@
     </tbody>
 </table>
 
-<!-- Link to create a new status message -->
-<p><a href="{% url 'create_status' pk=profile.pk %}">Create a Status Message</a></p>
-<p><a href="{% url 'update_profile' pk=profile.pk %}">Update Profile</a></p>
-
+{% if user.is_authenticated and user == profile.user %}
+    <!-- Links visible only to the profile owner -->
+    <p><a href="{% url 'create_status' pk=profile.pk %}">Create a Status Message</a></p>
+    <p><a href="{% url 'update_profile' pk=profile.pk %}">Update Profile</a></p>
+    <p><a href="{% url 'friend_suggestions' pk=profile.pk %}">See Friend Suggestions</a></p>
+    <p><a href="{% url 'news_feed' pk=profile.pk %}">View News Feed</a></p>
+{% endif %}
 
 <!-- Profile's friends -->
 <h2>{{profile.first_name}}'s friends</h2>
@@ -49,12 +47,6 @@
         <li>No friends yet.</li>
     {% endfor %}
 </ul>
-
-<!-- Link to view friend suggestions -->
-<p><a href="{% url 'friend_suggestions' pk=profile.pk %}">See Friend Suggestions</a></p>
-
-<!-- Link to view the news feed -->
-<p><a href="{% url 'news_feed' pk=profile.pk %}">View News Feed</a></p>
 
 <!-- Display status messages -->
 <h2>Status Messages</h2>
@@ -74,17 +66,16 @@
                     {% endif %}
                 </div>
             {% endfor %}
-
-            <!-- Delete status message link -->
-            <div>
-                <a href="{% url 'delete_status' pk=message.pk %}">Delete</a>
-            </div>
-
-            <!-- Update status message link -->
-            <div>
-                <a href="{% url 'update_status' pk=message.pk %}">Update</a>
-            </div>
             
+            {% if user.is_authenticated and user == profile.user %}
+                <!-- Delete and update links visible only to the profile owner -->
+                <div>
+                    <a href="{% url 'delete_status' pk=message.pk %}">Delete</a>
+                </div>
+                <div>
+                    <a href="{% url 'update_status' pk=message.pk %}">Update</a>
+                </div>
+            {% endif %}
         </div>
     {% empty %}
         <p>No status messages yet.</p>

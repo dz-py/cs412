@@ -2,12 +2,14 @@
 # define data models for the mini_fb app
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
                   
 # Create your models here.
 class Profile(models.Model):
     ''' Encapsulate the data of a user profile '''
 
     # define the fields of the profile
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     first_name = models.TextField(blank=True)
     last_name = models.TextField(blank=True)
     city = models.TextField(blank=True)

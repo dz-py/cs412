@@ -6,6 +6,8 @@ from .views import (ShowAllProfilesView, ShowProfilePageView,
                     UpdateProfileView, DeleteStatusMessageView, 
                     UpdateStatusMessageView, CreateFriendView,
                     ShowFriendSuggestionsView, ShowNewsFeedView)
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', ShowAllProfilesView.as_view(), name="show_all_profiles"),
@@ -18,4 +20,7 @@ urlpatterns = [
     path('profile/<int:pk>/add_friend/<int:other_pk>/', CreateFriendView.as_view(), name='add_friend'),
     path('profile/<int:pk>/friend_suggestions', ShowFriendSuggestionsView.as_view(), name='friend_suggestions'),
     path('profile/<int:pk>/news_feed/', ShowNewsFeedView.as_view(), name='news_feed'),  # New URL pattern
+    # authorization related urls
+    path('login/', auth_views.LoginView.as_view(template_name='mini_fb/login.html'), name='login'),  
+    path('logout/', LogoutView.as_view(next_page='show_all_profiles'), name='logout'),
 ]
