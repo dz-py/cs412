@@ -11,7 +11,12 @@
 <form method="POST">
     {% csrf_token %}
     <div>
+        <h3>User Registration</h3>
+        {{ user_form.as_p }}
+        
+        <h3>Profile Details</h3>
         {{ form.as_p }}
+        
         <button type="submit">Create Profile</button>
     </div>
 </form>

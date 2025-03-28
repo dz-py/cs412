@@ -5,6 +5,8 @@ from .models import Profile, StatusMessage, Image, StatusImage
 from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm, UpdateProfileStatusForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 class ShowAllProfilesView(ListView):
     ''' Define a view class that shows all profiles '''
@@ -29,6 +31,35 @@ class CreateProfileView(CreateView):
     model = Profile
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
+
+    def get_context_data(self, **kwargs):
+        '''Return a dictionary with context data for this template to use'''
+
+        # Get the context from the parent class
+        context = super().get_context_data(**kwargs)
+        # Create an instance of UserCreationForm and add it to the context
+        context['user_form'] = UserCreationForm()
+        return context
+    
+    def form_valid(self, form):
+        '''Handle case when the form is valid'''
+        # Reconstruct the UserCreationForm with POST data
+        user_form = UserCreationForm(self.request.POST)
+        
+        # Validate the user form
+        if user_form.is_valid():
+            # Save the user and get the User object
+            user = user_form.save()
+            
+            # Log the user in
+            login(self.request, user)
+            
+            # Attach the User to the Profile instance
+            form.instance.user = user
+        
+        # Delegate to the superclass method to complete the process
+        return super().form_valid(form)
+
 
 class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     ''' Define a view class that creates a new status message '''
