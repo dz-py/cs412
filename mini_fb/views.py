@@ -1,13 +1,11 @@
-# mini_fb/views.py
-# define views for the mini_fb app
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse
 from .models import Profile, StatusMessage, Image, StatusImage
 from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm, UpdateProfileStatusForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
-# Create your views here.
 class ShowAllProfilesView(ListView):
     ''' Define a view class that shows all profiles '''
     model = Profile
@@ -38,22 +36,29 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     form_class = CreateStatusMessageForm
     template_name = 'mini_fb/create_status_form.html'
     
+    def get_object(self):
+        '''Get the profile for the logged-in user'''
+        try:
+            # Find the profile associated with the logged-in user
+            return Profile.objects.get(user=self.request.user)
+        except Profile.DoesNotExist:
+            # If no profile exists for the user, raise a permission denied error
+            raise PermissionDenied("You must create a profile first.")
+    
     def get_context_data(self, **kwargs):
         '''Return a dictionary with context data for this template to use'''
         # Get the context from the parent class
         context = super().get_context_data(**kwargs)
-        # Get the profile that this status message is for
-        profile_pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=profile_pk)
+        # Get the profile for the logged-in user
+        profile = self.get_object()
         # Add this profile to the context
         context['profile'] = profile
         return context
     
     def form_valid(self, form):
         '''Handle case when the form is valid'''
-        # Get the profile that this status message is for
-        profile_pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=profile_pk)
+        # Get the profile for the logged-in user
+        profile = self.get_object()
         # Associate this status message with this profile
         form.instance.profile = profile
         # Save the status message to database
@@ -77,19 +82,31 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
         # Call parent method to finish the creation
         return super().form_valid(form)
 
-    
     def get_success_url(self):
         '''Return a URL to which we should be directed after the form is successfully submitted'''
-        # Get the pk of the profile that this status message is for
-        profile_pk = self.kwargs['pk']
+        # Get the profile for the logged-in user
+        profile = self.get_object()
         # Reverse to profile page for this profile
-        return reverse('show_profile', kwargs={'pk': profile_pk})
+        return reverse('show_profile', kwargs={'pk': profile.pk})
 
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
     ''' Define a view class that updates a profile '''
     model = Profile
     form_class = UpdateProfileForm
     template_name = 'mini_fb/update_profile_form.html'
+
+    def get_object(self):
+        '''Get the profile for the logged-in user'''
+        try:
+            # Find the profile associated with the logged-in user
+            return Profile.objects.get(user=self.request.user)
+        except Profile.DoesNotExist:
+            # If no profile exists for the user, raise a permission denied error
+            raise PermissionDenied("You must create a profile first.")
+
+    def get_success_url(self):
+        '''Return URL after successful update'''
+        return reverse('show_profile', kwargs={'pk': self.object.pk})
 
 class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
     ''' Define a view class that deletes a status message '''
@@ -120,8 +137,10 @@ class CreateFriendView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         '''Process the request to add a friend relationship'''
         # get the profile doing the friending (current user profile)
-        profile_pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=profile_pk)
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            raise PermissionDenied("You must create a profile first.")
         
         # get the profile to add as a friend
         other_pk = self.kwargs['other_pk']
@@ -131,17 +150,35 @@ class CreateFriendView(LoginRequiredMixin, View):
         profile.add_friend(other_profile)
         
         # redirect back to the current user's profile page after done adding friend
-        return redirect(reverse('show_profile', kwargs={'pk': profile_pk}))
+        return redirect(reverse('show_profile', kwargs={'pk': profile.pk}))
     
 
-class ShowFriendSuggestionsView(DetailView):
+class ShowFriendSuggestionsView(LoginRequiredMixin, DetailView):
     ''' Define a view class that shows friend suggestions for a profile '''
     model = Profile
     template_name = 'mini_fb/friend_suggestions.html'
     context_object_name = 'profile'
 
-class ShowNewsFeedView(DetailView):
+    def get_object(self):
+        '''Get the profile for the logged-in user'''
+        try:
+            # Find the profile associated with the logged-in user
+            return Profile.objects.get(user=self.request.user)
+        except Profile.DoesNotExist:
+            # If no profile exists for the user, raise a permission denied error
+            raise PermissionDenied("You must create a profile first.")
+
+class ShowNewsFeedView(LoginRequiredMixin, DetailView):
     """Display the news feed for a profile."""
     model = Profile
     template_name = 'mini_fb/news_feed.html'
     context_object_name = 'profile'
+
+    def get_object(self):
+        '''Get the profile for the logged-in user'''
+        try:
+            # Find the profile associated with the logged-in user
+            return Profile.objects.get(user=self.request.user)
+        except Profile.DoesNotExist:
+            # If no profile exists for the user, raise a permission denied error
+            raise PermissionDenied("You must create a profile first.")

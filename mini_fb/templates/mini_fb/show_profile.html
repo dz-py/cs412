@@ -29,10 +29,10 @@
 
 {% if user.is_authenticated and user == profile.user %}
     <!-- Links visible only to the profile owner -->
-    <p><a href="{% url 'create_status' pk=profile.pk %}">Create a Status Message</a></p>
-    <p><a href="{% url 'update_profile' pk=profile.pk %}">Update Profile</a></p>
-    <p><a href="{% url 'friend_suggestions' pk=profile.pk %}">See Friend Suggestions</a></p>
-    <p><a href="{% url 'news_feed' pk=profile.pk %}">View News Feed</a></p>
+    <p><a href="{% url 'create_status' %}">Create a Status Message</a></p>
+    <p><a href="{% url 'update_profile' %}">Update Profile</a></p>
+    <p><a href="{% url 'friend_suggestions' %}">See Friend Suggestions</a></p>
+    <p><a href="{% url 'news_feed' %}">View News Feed</a></p>
 {% endif %}
 
 <!-- Profile's friends -->
