@@ -1,0 +1,26 @@
+<!-- voter_analytics/templates/voter_analytics/base.html -->
+<!-- Base file for reusing components such as navigation and footer -->
+
+{% load static %}
+<html>
+    <head>
+        <title>Voter Analytics</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'styles-mini-fb.css' %}">
+    </head>
+    <body>
+        <header>
+            <!-- Navigation -->
+            <nav>
+                <a href="{% url 'voters' %}">Home</a> |
+                <a href="{% url 'graphs' %}">Graphs</a>
+            </nav>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+
+        <footer>
+            <p>Copyright ©2025 | Designed by Decheng Zheng</p>
+        </footer>
+    </body>
+</html>

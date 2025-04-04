@@ -1,5 +1,7 @@
-from django.db import models
+# voter_analytics/models.py
+# Defines the Voter model and a function to load voter data from a CSV file into the database.
 
+from django.db import models
 
 class Voter(models.Model):
     '''Encapsulate the data of a registered voter'''

@@ -1,0 +1,90 @@
+<!-- voter_analytics/templates/voter_analytics/voter_detail.html -->
+<!-- Display a single voter's deatils -->
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Voter Details: {{ voter.first_name }} {{ voter.last_name }}</h1>
+
+
+
+    <!-- Voter Details -->
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>{{ voter.first_name }}</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>{{ voter.last_name }}</td>
+        </tr>
+        <tr>
+            <td>Street Number</td>
+            <td>{{ voter.street_number }}</td>
+        </tr>
+        <tr>
+            <td>Street Name</td>
+            <td>{{ voter.street_name }}</td>
+        </tr>
+        <tr>
+            <td>Apartment Number</td>
+            <td>{{ voter.apartment_number|default:"N/A" }}</td>
+        </tr>
+        <tr>
+            <td>Zip Code</td>
+            <td>{{ voter.zip_code }}</td>
+        </tr>
+        <tr>
+            <td>Date of Birth</td>
+            <td>{{ voter.dob }}</td>
+        </tr>
+        <tr>
+            <td>Date of Registration</td>
+            <td>{{ voter.dor }}</td>
+        </tr>
+        <tr>
+            <td>Party Affiliation</td>
+            <td>{{ voter.party_affiliation }}</td>
+        </tr>
+        <tr>
+            <td>Precinct Number</td>
+            <td>{{ voter.precinct_number }}</td>
+        </tr>
+        <tr>
+            <td>Voted in 2020 State</td>
+            <td>{{ voter.v20state }}</td>
+        </tr>
+        <tr>
+            <td>Voted in 2021 Town</td>
+            <td>{{ voter.v21town }}</td>
+        </tr>
+        <tr>
+            <td>Voted in 2021 Primary</td>
+            <td>{{ voter.v21primary }}</td>
+        </tr>
+        <tr>
+            <td>Voted in 2022 General</td>
+            <td>{{ voter.v22general }}</td>
+        </tr>
+        <tr>
+            <td>Voted in 2023 Town</td>
+            <td>{{ voter.v23town }}</td>
+        </tr>
+        <tr>
+            <td>Voter Score</td>
+            <td>{{ voter.voter_score }}</td>
+        </tr>
+    </table>
+    
+
+    <!-- Google Maps Link -->
+    <p>
+        <a href="https://www.google.com/maps/search/?api=1&query={{ voter.street_number }}+{{ voter.street_name }}{% if voter.apartment_number %},+{{ voter.apartment_number }}{% endif %},+{{ voter.zip_code }}"
+           target="_blank">View on Google Maps</a>
+    </p>
+</div>
+{% endblock %}
