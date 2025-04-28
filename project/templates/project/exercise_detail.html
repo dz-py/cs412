@@ -1,0 +1,17 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1>{{ exercise.name }}</h1>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Exercise Details</h5>
+        <p class="card-text">
+            <strong>Muscle Group:</strong> {{ exercise.muscle_group }}<br>
+            <strong>Equipment:</strong> {{ exercise.equipment }}
+        </p>
+        <a href="{% url 'project:exercise_list' %}" class="btn btn-secondary">Back to Exercises</a>
+    </div>
+</div>
+{% endblock %} 

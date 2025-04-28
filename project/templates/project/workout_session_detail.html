@@ -1,0 +1,59 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h1>Workout Session Details</h1>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ workout_session.user.username }}'s Workout</h5>
+        <p class="card-text">
+            <strong>Date:</strong> {{ workout_session.date }}<br>
+            {% if workout_session.notes %}
+            <strong>Notes:</strong> {{ workout_session.notes }}
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<h2>Workout Entries</h2>
+{% for entry in workout_entries %}
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>{{ entry.exercise.name }}</h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Set</th>
+                        <th>Reps</th>
+                        <th>Weight</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for set in entry.sets.all %}
+                    <tr>
+                        <td>Set {{ set.set_number }}</td>
+                        <td>{{ set.reps }} reps</td>
+                        <td>{{ set.weight }} lbs</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No sets recorded for this exercise.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="alert alert-info">
+    No exercises recorded for this workout.
+</div>
+{% endfor %}
+
+<a href="{% url 'project:workout_session_list' %}" class="btn btn-secondary">Back to Workouts</a>
+{% endblock %} 

@@ -1,0 +1,91 @@
+id,name,exercise_type_id,muscle_group
+1,Stair Climbing,1,"Legs, Glutes"
+2,Elliptical Trainer,1,"Full Body (Legs, Glutes, Arms)"
+3,Rowing Machine,1,"Back, Arms, Legs"
+4,Stairmaster,1,"Legs, Glutes"
+5,Stationary Bicycle,1,"Legs, Glutes"
+6,Treadmill,1,Unknown
+7,Cycling,1,Unknown
+8,Inline Skating,1,Unknown
+9,Jogging,1,Unknown
+10,Nordic Walking,1,Unknown
+11,Squat,2,"Legs, Glutes, Core"
+12,Leg Press,2,"Legs, Glutes"
+13,Lunge,2,Unknown
+14,Calf Raise,2,Unknown
+15,Leg Extension,2,Unknown
+16,Deadlift,2,"Back, Glutes, Hamstrings"
+17,Leg Curl,2,Unknown
+18,Bench Press,2,"Chest, Triceps, Shoulders"
+19,Fly,2,Unknown
+20,Push Up,2,Unknown
+21,Bent-over Row,2,Unknown
+22,Chin-up,2,Unknown
+23,Pulldown,2,Unknown
+24,Pullup,2,Unknown
+25,Shoulder Shrug,2,Unknown
+26,Front Raise,2,Unknown
+27,Handstand Pushup,2,Unknown
+28,Lateral Raise,2,Unknown
+29,Military Press,2,Unknown
+30,Shoulder Press,2,"Shoulders, Triceps"
+31,Upright Row,2,Unknown
+32,Rear Delt Raise,2,Unknown
+33,Biceps Curl,2,Unknown
+34,Dip,2,Unknown
+35,Pushdown,2,Unknown
+36,Triceps Extension,2,Unknown
+37,Crunch,2,Unknown
+38,Sit-up,2,Unknown
+39,Leg Raise,2,Unknown
+40,Back Extension,2,Unknown
+41,Hyperextension,2,Unknown
+42,Basketball,3,Unknown
+43,Baseball,3,Unknown
+44,Football,3,Unknown
+45,Hockey,3,Unknown
+46,Golf,3,Unknown
+47,Water Polo,3,Unknown
+48,Swimming,1,Unknown
+49,Skiing,3,Unknown
+50,Skateboarding,3,Unknown
+51,Hang Gliding,3,Unknown
+52,Snowboarding,3,Unknown
+53,Fishing,3,Unknown
+54,Hunting,3,Unknown
+55,Paintball,3,Unknown
+56,Kayaking,3,Unknown
+57,Hiking,3,Unknown
+58,Tennis,3,Unknown
+59,Canoeing,3,Unknown
+60,Kitesurfing,3,Unknown
+61,Gymnastics,3,Unknown
+62,Bowling,3,Unknown
+63,Boxing,3,Unknown
+64,Auto racing,3,Unknown
+65,Skating,3,Unknown
+66,Squash,3,Unknown
+67,Rodeo,3,Unknown
+68,Volleyball,3,Unknown
+69,Soccer,3,Unknown
+70,Darts,3,Unknown
+71,Table Tennis,3,Unknown
+72,Cricket,3,Unknown
+73,Skydiving,3,Unknown
+74,Aquafit,4,Unknown
+75,Belly Dancing,4,Unknown
+76,Bootcamp Conditioning,4,Unknown
+77,Cardio Jam,4,Unknown
+78,Cycle Zone,4,Unknown
+79,Hip Hop,4,Unknown
+80,Kickbox Cardio,4,Unknown
+81,Club Boxing,4,Unknown
+82,Mat Pilates,4,Unknown
+83,Senior Fit,4,Unknown
+84,Step plus Abs,4,Unknown
+85,Step II plus Abs,4,Unknown
+86,Step Circuit,4,Unknown
+87,Step Sculpt,4,Unknown
+88,Striding,4,Unknown
+89,Yoga,4,Unknown
+90,Yoga Basics,4,Unknown
