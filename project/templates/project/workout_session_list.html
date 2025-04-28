@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Workout Sessions</h1>
+<a href="{% url 'project:workout_session_create' %}" class="btn btn-primary mb-3">Add Workout</a>
 <div class="row">
     {% for session in workout_sessions %}
     <div class="col-md-6 mb-4">

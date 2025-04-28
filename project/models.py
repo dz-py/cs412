@@ -4,18 +4,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Profile(models.Model):
-    """
-    Represents a user profile in the workout tracking system.
-    Stores basic user information for authentication and identification.
-    """
-    username = models.CharField(max_length=100)  # User's login name
-    email = models.CharField(max_length=100)     # User's email address
-    date_joined = models.DateField()             # When the user registered
-
-    def __str__(self):
-        return self.username
-
 class Exercise(models.Model):
     """
     Represents a specific exercise that can be performed during a workout.
@@ -24,6 +12,7 @@ class Exercise(models.Model):
     name = models.CharField(max_length=100)  # Name of the exercise (e.g., "Bench Press", "Squats")
     muscle_group = models.CharField(max_length=50)  # Primary muscle group targeted (e.g., "Chest", "Legs")
     equipment = models.CharField(max_length=50)  # Equipment needed (e.g., "Dumbbell", "Barbell", "Bodyweight")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -33,7 +22,7 @@ class WorkoutSession(models.Model):
     Represents a single workout session performed by a user.
     Contains the date and optional notes about the workout.
     """
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)  # Link to the user who performed the workout
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Changed from Profile to User
     date = models.DateField()  # When the workout was performed
     notes = models.TextField(blank=True, null=True)  # Optional notes about the workout session
 

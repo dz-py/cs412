@@ -2,18 +2,27 @@
 
 {% block content %}
 <div class="jumbotron">
-    <h1 class="display-4">Welcome to Workout Tracker</h1>
+    <h1 class="display-4">
+        Welcome to Your Personal Workout Tracker,
+        {% if user.is_authenticated %}
+            {{ user.first_name|default:user.username }}!
+        {% else %}
+            Guest!
+        {% endif %}
+    </h1>
     <p class="lead">Track your workouts, monitor your progress, and achieve your fitness goals.</p>
     <hr class="my-4">
-    <p>Get started by viewing exercises or logging your workouts.</p>
-    <div class="row">
-        <div class="col-md-6">
-            <a href="{% url 'project:exercise_list' %}" class="btn btn-primary btn-lg">View Exercises</a>
+    {% if user.is_authenticated %}
+        <p>Get started by viewing exercises or logging your workouts.</p>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="{% url 'project:exercise_list' %}" class="btn btn-primary btn-lg">Add/View Exercises</a>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'project:workout_session_list' %}" class="btn btn-success btn-lg">Add/View Workouts</a>
+            </div>
         </div>
-        <div class="col-md-6">
-            <a href="{% url 'project:workout_session_list' %}" class="btn btn-success btn-lg">View Workouts</a>
-        </div>
-    </div>
+    {% endif %}
 </div>
 
 <div class="row mt-4">
@@ -34,7 +43,7 @@
                     {% endfor %}
                 </ul>
                 {% else %}
-                <p>No recent workouts.</p>
+                <p>{% if user.is_authenticated %}No recent workouts.{% else %}Please log in to view your workouts.{% endif %}</p>
                 {% endif %}
             </div>
         </div>
@@ -45,7 +54,11 @@
                 <h2>Quick Stats</h2>
             </div>
             <div class="card-body">
-                <p><strong>Total Exercises:</strong> {{ exercise_count }}</p>
+                {% if user.is_authenticated %}
+                    <p><strong>Total Exercises:</strong> {{ exercise_count }}</p>
+                {% else %}
+                    <p>Please log in to view your stats.</p>
+                {% endif %}
             </div>
         </div>
     </div>

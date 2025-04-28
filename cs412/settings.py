@@ -46,7 +46,7 @@ ROOT_URLCONF = 'cs412.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'project/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,3 +111,6 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/dechengz/static/'
     MEDIA_URL = '/dechengz/media/'
+
+LOGIN_REDIRECT_URL = 'project:home'
+LOGOUT_REDIRECT_URL = 'project:home'

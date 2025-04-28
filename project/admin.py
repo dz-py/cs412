@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Profile, Exercise, WorkoutSession, WorkoutEntry, Set
+from .models import Exercise, WorkoutSession, WorkoutEntry, Set
 
 class SetInline(admin.TabularInline):
     model = Set
@@ -18,6 +18,5 @@ class WorkoutEntryAdmin(admin.ModelAdmin):
         return obj.sets.count()
     get_total_sets.short_description = 'Total Sets'
 
-admin.site.register(Profile)
 admin.site.register(Exercise)
 admin.site.register(WorkoutSession)

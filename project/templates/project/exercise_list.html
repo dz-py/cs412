@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Exercises</h1>
+<a href="{% url 'project:exercise_create' %}" class="btn btn-primary mb-3">Add Exercise</a>
 <div class="row">
     {% for exercise in exercises %}
     <div class="col-md-4 mb-4">
@@ -12,7 +13,9 @@
                     <strong>Muscle Group:</strong> {{ exercise.muscle_group }}<br>
                     <strong>Equipment:</strong> {{ exercise.equipment }}
                 </p>
-                <a href="{% url 'project:exercise_detail' exercise.pk %}" class="btn btn-primary">View Details</a>
+                <a href="{% url 'project:exercise_detail' exercise.pk %}" class="btn btn-primary">View</a>
+                <a href="{% url 'project:exercise_update' exercise.pk %}" class="btn btn-secondary">Edit</a>
+                <a href="{% url 'project:exercise_delete' exercise.pk %}" class="btn btn-danger">Delete</a>
             </div>
         </div>
     </div>

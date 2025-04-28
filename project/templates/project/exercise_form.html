@@ -1,0 +1,17 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>{% if object %}Edit{% else %}Add{% endif %} Exercise</h2>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% url 'project:exercise_list' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %} 
