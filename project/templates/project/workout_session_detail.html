@@ -13,6 +13,12 @@
             <strong>Notes:</strong> {{ workout_session.notes }}
             {% endif %}
         </p>
+        <div class="mt-3">
+            <a href="{% url 'project:workout_session_list' %}" class="btn btn-secondary">Back to Workouts</a>
+            <a href="{% url 'project:workout_session_delete' workout_session.pk %}" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Delete Workout
+            </a>
+        </div>
     </div>
 </div>
 
@@ -33,11 +39,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for set in entry.sets.all %}
+                    {% for set in entry.sets.all|dictsort:"set_number" %}
                     <tr>
                         <td>Set {{ set.set_number }}</td>
                         <td>{{ set.reps }} reps</td>
-                        <td>{{ set.weight }} lbs</td>
+                        <td>{{ set.weight|default:"-" }} lbs</td>
                     </tr>
                     {% empty %}
                     <tr>
@@ -54,6 +60,4 @@
     No exercises recorded for this workout.
 </div>
 {% endfor %}
-
-<a href="{% url 'project:workout_session_list' %}" class="btn btn-secondary">Back to Workouts</a>
 {% endblock %} 

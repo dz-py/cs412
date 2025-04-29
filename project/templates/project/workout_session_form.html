@@ -9,9 +9,143 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Save</button>
-            <a href="{% url 'project:workout_session_list' %}" class="btn btn-secondary">Cancel</a>
+            
+            <h3>Workout Entries</h3>
+            {{ workout_entry_formset.management_form }}
+            <div id="entries-formset">
+                {% for form in workout_entry_formset %}
+                <div class="entry-form mb-4 p-3 border rounded position-relative">
+                    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 delete-entry">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                    {{ form.as_p }}
+                    <h5>Sets</h5>
+                    {{ form.set_formset.management_form }}
+                    <div class="sets-formset">
+                        {% for set_form in form.set_formset %}
+                        <div class="set-form mb-2 p-2 border rounded position-relative">
+                            <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 delete-set">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                            {{ set_form.as_p }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="btn btn-sm btn-secondary add-set" data-entry-index="{{ forloop.counter0 }}">
+                        Add Set
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="{% url 'project:workout_session_list' %}" class="btn btn-secondary">Cancel</a>
+                <button type="button" class="btn btn-success" id="add-another-exercise">
+                    Add Another Exercise
+                </button>
+            </div>
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addEntryButton = document.getElementById('add-another-exercise');
+        const formsetContainer = document.getElementById('entries-formset');
+        const totalForms = document.getElementById('id_entries-TOTAL_FORMS');
+    
+        addEntryButton.addEventListener('click', function() {
+            const formCount = parseInt(totalForms.value);
+            const newForm = formsetContainer.children[0].cloneNode(true);
+    
+            // Update all entry form names and IDs
+            newForm.innerHTML = newForm.innerHTML.replace(/entries-\d+/g, `entries-${formCount}`);
+            newForm.innerHTML = newForm.innerHTML.replace(/sets-\d+/g, `sets-${formCount}`);
+    
+            // Clear input values inside entry form (but not hidden fields)
+            newForm.querySelectorAll('input').forEach(input => {
+                if (!input.type.includes('hidden')) {
+                    input.value = '';
+                }
+            });
+    
+            // Handle set formset inside the new entry
+            const setsContainer = newForm.querySelector('.sets-formset');
+    
+            // Remove all but the first set form
+            while (setsContainer.children.length > 1) {
+                setsContainer.removeChild(setsContainer.lastElementChild);
+            }
+    
+            const firstSetForm = setsContainer.querySelector('.set-form');
+            if (firstSetForm) {
+                firstSetForm.innerHTML = firstSetForm.innerHTML.replace(/sets-\d+-\d+/g, `sets-${formCount}-0`);
+                firstSetForm.querySelectorAll('input').forEach(input => {
+                    if (!input.type.includes('hidden')) {
+                        input.value = '';
+                    }
+                });
+            }
+    
+            // Update set management form inside the sets-formset
+            const setTotalForms = setsContainer.querySelector('[id$="-TOTAL_FORMS"]');
+            if (setTotalForms) {
+                setTotalForms.name = `sets-${formCount}-TOTAL_FORMS`;
+                setTotalForms.id = `id_sets-${formCount}-TOTAL_FORMS`;
+                setTotalForms.value = 1;
+            }
+    
+            formsetContainer.appendChild(newForm);
+            totalForms.value = formCount + 1;
+        });
+    
+        // Add set button functionality (detect the correct entry index dynamically)
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('add-set')) {
+                const entryForm = e.target.closest('.entry-form');
+                const setsContainer = entryForm.querySelector('.sets-formset');
+    
+                // Dynamically find the entry index
+                const firstInput = entryForm.querySelector('input[name]');
+                const match = firstInput.name.match(/entries-(\d+)-/);
+                const entryIndex = match ? match[1] : '0';
+    
+                const totalSets = document.getElementById(`id_sets-${entryIndex}-TOTAL_FORMS`);
+                const setCount = parseInt(totalSets.value);
+    
+                const newSetForm = setsContainer.children[0].cloneNode(true);
+    
+                // Update all the input names and ids for the new set
+                newSetForm.innerHTML = newSetForm.innerHTML.replace(/sets-\d+-\d+/g, `sets-${entryIndex}-${setCount}`);
+    
+                newSetForm.querySelectorAll('input').forEach(input => {
+                    if (!input.type.includes('hidden')) {
+                        input.value = '';
+                    }
+                });
+    
+                setsContainer.appendChild(newSetForm);
+                totalSets.value = setCount + 1;
+            }
+        });
+    
+        // Delete entry
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-entry')) {
+                const entryForm = e.target.closest('.entry-form');
+                entryForm.remove();
+            }
+        });
+    
+        // Delete set
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('delete-set')) {
+                const setForm = e.target.closest('.set-form');
+                setForm.remove();
+            }
+        });
+    });
+</script>
+    
 {% endblock %} 

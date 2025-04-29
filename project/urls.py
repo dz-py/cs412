@@ -17,4 +17,5 @@ urlpatterns = [
     path('exercises/<int:pk>/delete/', views.ExerciseDeleteView.as_view(), name='exercise_delete'),
     path('workouts/create/', views.WorkoutSessionCreateView.as_view(), name='workout_session_create'),
     path('logout/', auth_views.LogoutView.as_view(next_page='project:home'), name='logout'),
+    path('workouts/<int:pk>/delete/', views.WorkoutSessionDeleteView.as_view(), name='workout_session_delete'),
 ]

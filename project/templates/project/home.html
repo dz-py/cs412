@@ -25,40 +25,47 @@
     {% endif %}
 </div>
 
-<div class="row mt-4">
-    <div class="col-md-6">
-        <div class="card">
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
             <div class="card-header">
-                <h2>Recent Workouts</h2>
+                <h3>5 Most Recent Workouts</h3>
             </div>
             <div class="card-body">
                 {% if recent_workouts %}
-                <ul class="list-group">
-                    {% for workout in recent_workouts %}
-                    <li class="list-group-item">
-                        <a href="{% url 'project:workout_session_detail' workout.pk %}">
-                            {{ workout.user.username }}'s workout on {{ workout.date }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
+                    <ul class="list-group">
+                        {% for workout in recent_workouts %}
+                        <li class="list-group-item">
+                            <a href="{% url 'project:workout_session_detail' workout.pk %}">
+                                {{ workout.date }} - {{ workout.notes|truncatechars:50 }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 {% else %}
-                <p>{% if user.is_authenticated %}No recent workouts.{% else %}Please log in to view your workouts.{% endif %}</p>
+                    <p>No recent workouts.</p>
                 {% endif %}
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card">
+    
+    <div class="col-md-4">
+        <div class="card mb-4">
             <div class="card-header">
-                <h2>Quick Stats</h2>
+                <h3>Quick Stats</h3>
             </div>
             <div class="card-body">
-                {% if user.is_authenticated %}
-                    <p><strong>Total Exercises:</strong> {{ exercise_count }}</p>
-                {% else %}
-                    <p>Please log in to view your stats.</p>
-                {% endif %}
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        Total Exercises: {{ total_exercises }}
+                    </li>
+                    <li class="list-group-item">
+                        Total Workouts: {{ total_workouts }}
+                    </li>
+                    <li class="list-group-item">
+                        Total Sets: {{ total_sets }}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
