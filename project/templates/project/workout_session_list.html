@@ -1,8 +1,54 @@
+<!-- project/templates/project/workout_session_list.html -->
+<!--
+    Template for displaying a list of workout sessions.
+    Allows users to filter sessions by month and year, view workout details, or add new sessions.
+-->
+
 {% extends 'project/base.html' %}
 
 {% block content %}
+<!-- Page Title and Add Workout Button -->
 <h1>Workout Sessions</h1>
 <a href="{% url 'project:workout_session_create' %}" class="btn btn-primary mb-3">Add Workout</a>
+
+<!-- Month/Year Filter Form -->
+<form method="get" class="mb-3">
+    <div class="row g-3">
+        <!-- Month Dropdown -->
+        <div class="col-md-4">
+            <label for="month" class="form-label">Month</label>
+            <select class="form-select" id="month" name="month">
+                <option value="">All Months</option>
+                {% for month_num, month_name in months %}
+                <option value="{{ month_num }}" {% if request.GET.month == month_num|stringformat:"02d" %}selected{% endif %}>
+                    {{ month_name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Year Dropdown -->
+        <div class="col-md-4">
+            <label for="year" class="form-label">Year</label>
+            <select class="form-select" id="year" name="year">
+                <option value="">All Years</option>
+                {% for year in years %}
+                <option value="{{ year }}" {% if request.GET.year == year|stringformat:"04d" %}selected{% endif %}>
+                    {{ year }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Filter and Clear Buttons -->
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a href="{% url 'project:workout_session_list' %}" class="btn btn-secondary ms-2">Clear</a>
+        </div>
+    </div>
+</form>
+
+<!-- Workout Sessions List -->
 <div class="row">
     {% for session in workout_sessions %}
     <div class="col-md-6 mb-4">
@@ -15,14 +61,16 @@
                     <strong>Notes:</strong> {{ session.notes }}
                     {% endif %}
                 </p>
+                <!-- Link to view workout session details -->
                 <a href="{% url 'project:workout_session_detail' session.pk %}" class="btn btn-primary">View Details</a>
             </div>
         </div>
     </div>
     {% empty %}
+    <!-- Message if no workout sessions are available -->
     <div class="col">
         <p>No workout sessions available.</p>
     </div>
     {% endfor %}
 </div>
-{% endblock %} 
+{% endblock %}

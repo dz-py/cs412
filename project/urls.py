@@ -1,3 +1,8 @@
+# project/urls.py
+#
+# This file contains URL patterns for the project app.
+# It maps URLs to their corresponding views.
+
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
@@ -5,9 +10,14 @@ from django.contrib.auth import views as auth_views
 app_name = 'project'
 
 urlpatterns = [
+    # Home page
     path('', views.HomeView.as_view(), name='home'),
+    
+    # Exercise-related URLs
     path('exercises/', views.ExerciseListView.as_view(), name='exercise_list'),
     path('exercises/<int:pk>/', views.ExerciseDetailView.as_view(), name='exercise_detail'),
+    
+    # Workout-related URLs
     path('workouts/', views.WorkoutSessionListView.as_view(), name='workout_session_list'),
     path('workouts/<int:pk>/', views.WorkoutSessionDetailView.as_view(), name='workout_session_detail'),
     path('accounts/', include('django.contrib.auth.urls')),

@@ -1,14 +1,13 @@
 # project/models.py
-# This file contains the models for the project.
+#
+# This file contains the data models for the project app.
+# It defines the structure of the database tables and their relationships.
 
 from django.db import models
 from django.contrib.auth.models import User
 
 class Exercise(models.Model):
-    """
-    Represents a specific exercise that can be performed during a workout.
-    This is a template/model for exercises that users can choose from.
-    """
+    """ Model for storing exercise information """
     name = models.CharField(max_length=100)  # Name of the exercise (e.g., "Bench Press", "Squats")
     muscle_group = models.CharField(max_length=50)  # Primary muscle group targeted (e.g., "Chest", "Legs")
     equipment = models.CharField(max_length=50)  # Equipment needed (e.g., "Dumbbell", "Barbell", "Bodyweight")
@@ -18,10 +17,7 @@ class Exercise(models.Model):
         return self.name
 
 class WorkoutSession(models.Model):
-    """
-    Represents a single workout session performed by a user.
-    Contains the date and optional notes about the workout.
-    """
+    """ Model for storing workout session information """
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Changed from Profile to User
     date = models.DateField()  # When the workout was performed
     notes = models.TextField(blank=True, null=True)  # Optional notes about the workout session

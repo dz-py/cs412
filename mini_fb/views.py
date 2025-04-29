@@ -1,3 +1,8 @@
+# mini_fb/views.py
+#
+# This file contains the views for the mini_fb app.
+# It handles the logic for displaying pages and processing user input.
+
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse

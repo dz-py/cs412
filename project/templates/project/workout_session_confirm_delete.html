@@ -1,17 +1,18 @@
+<!-- project/templates/project/workout_session_confirm_delete.html -->
+<!--
+    The workout session delete confirmation template.
+    Allows users to confirm deletion of a workout session.
+-->
 {% extends 'project/base.html' %}
 
 {% block content %}
-<div class="card">
-    <div class="card-header">
-        <h2>Delete Workout Session</h2>
-    </div>
-    <div class="card-body">
-        <p>Are you sure you want to delete the workout from {{ workout_session.date }}?</p>
-        <form method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete</button>
-            <a href="{% url 'project:workout_session_list' %}" class="btn btn-secondary">Cancel</a>
-        </form>
-    </div>
-</div>
+<h1>Delete Workout Session</h1>
+
+<p>Are you sure you want to delete the workout session from {{ workout_session.date }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'project:workout_session_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
 {% endblock %} 

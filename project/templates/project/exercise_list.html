@@ -1,8 +1,31 @@
+<!-- project/templates/project/exercise_list.html -->
+<!--
+    Template for displaying a list of exercises.
+    Allows users to filter exercises by muscle group, view details, edit, or delete entries.
+-->
+
 {% extends 'project/base.html' %}
 
 {% block content %}
 <h1>Exercises</h1>
 <a href="{% url 'project:exercise_create' %}" class="btn btn-primary mb-3">Add Exercise</a>
+
+<!-- Search/filter form -->
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <select name="muscle_group" class="form-select">
+            <option value="">All Muscle Groups</option>
+            {% for group in muscle_groups %}
+            <option value="{{ group }}" {% if request.GET.muscle_group == group %}selected{% endif %}>
+                {{ group }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+<!-- List of exercises -->
 <div class="row">
     {% for exercise in exercises %}
     <div class="col-md-4 mb-4">
@@ -25,4 +48,4 @@
     </div>
     {% endfor %}
 </div>
-{% endblock %} 
+{% endblock %}

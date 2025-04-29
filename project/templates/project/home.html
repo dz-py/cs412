@@ -1,17 +1,24 @@
+<!-- project/templates/project/home.html -->
+<!--
+    The home page template for the project app.
+    Displays a personalized welcome message, recent workouts, quick stats, and navigation shortcuts
+    for managing exercises and workout sessions.
+-->
+
 {% extends 'project/base.html' %}
 
 {% block content %}
+<!-- Welcome Section -->
 <div class="jumbotron">
-    <h1 class="display-4">
-        Welcome to Your Personal Workout Tracker,
-        {% if user.is_authenticated %}
-            {{ user.first_name|default:user.username }}!
-        {% else %}
-            Guest!
-        {% endif %}
-    </h1>
+    {% if user.is_authenticated %}
+        <h1 class="display-4">
+            Welcome to Your Personal Workout Tracker, {{ user.first_name|default:user.username }}
+        </h1>
+    {% endif %}
     <p class="lead">Track your workouts, monitor your progress, and achieve your fitness goals.</p>
     <hr class="my-4">
+
+    <!-- Buttons to exercises and workouts if logged in -->
     {% if user.is_authenticated %}
         <p>Get started by viewing exercises or logging your workouts.</p>
         <div class="row">
@@ -26,6 +33,7 @@
 </div>
 
 <div class="row">
+    <!-- Recent Workouts Section -->
     <div class="col-md-8">
         <div class="card mb-4">
             <div class="card-header">
@@ -36,19 +44,21 @@
                     <ul class="list-group">
                         {% for workout in recent_workouts %}
                         <li class="list-group-item">
+                            <!-- Link to each workout session detail page -->
                             <a href="{% url 'project:workout_session_detail' workout.pk %}">
-                                {{ workout.date }} - {{ workout.notes|truncatechars:50 }}
+                                {{ workout.date }} - {{ workout.notes|truncatechars:50 }}  <!-- Show date and a shortened note -->
                             </a>
                         </li>
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <p>No recent workouts.</p>
+                    <p>No recent workouts.</p>  <!-- Message if no workouts exist -->
                 {% endif %}
             </div>
         </div>
     </div>
     
+    <!-- Quick Stats Section -->
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-header">
@@ -70,4 +80,4 @@
         </div>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}
