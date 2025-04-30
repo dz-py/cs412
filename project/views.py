@@ -49,18 +49,53 @@ class HomeView(TemplateView):
         
         # Add workout stats
         if user.is_authenticated:
-            context['recent_workouts'] = WorkoutSession.objects.filter(
-                user=user
-            ).order_by('-date')[:5]
+            # Get 5 most recent workouts
+            context['recent_workouts'] = WorkoutSession.objects.filter(user=user).order_by('-date')[:5]
+            
+            # Calculate personal records for each exercise
+            personal_records = {}
+            exercises = Exercise.objects.filter(user=user)
+            
+            for exercise in exercises:
+                # Get all sets for this exercise
+                sets = Set.objects.filter(
+                    workout_entry__session__user=user,
+                    workout_entry__exercise=exercise
+                ).order_by('-weight', '-reps')
+                
+                if sets.exists():
+                    # Get the highest weight and reps combination
+                    best_set = sets.first()
+                    personal_records[exercise] = {
+                        'weight': best_set.weight,
+                        'reps': best_set.reps,
+                        'date': best_set.workout_entry.session.date
+                    }
+            
+            context['personal_records'] = personal_records
+
+            # Get workout statistics by month and year
+            workouts = WorkoutSession.objects.filter(user=user)
+            years = sorted(set(workout.date.year for workout in workouts), reverse=True)
+            context['workout_years'] = years
+
+            # Prepare data for the graph
+            workout_stats = {}
+            for year in years:
+                monthly_stats = [0] * 12  # Initialize list for 12 months
+                year_workouts = workouts.filter(date__year=year)
+                for workout in year_workouts:
+                    month_index = workout.date.month - 1  # Convert to 0-based index
+                    monthly_stats[month_index] += 1
+                workout_stats[str(year)] = monthly_stats  # Convert year to string for JSON serialization
+
+            context['workout_stats'] = workout_stats
+            
+            # Add total stats
             context['total_exercises'] = Exercise.objects.filter(user=user).count()
             context['total_workouts'] = WorkoutSession.objects.filter(user=user).count()
             context['total_sets'] = Set.objects.filter(workout_entry__session__user=user).count()
-        else:
-            context['recent_workouts'] = []
-            context['total_exercises'] = 0
-            context['total_workouts'] = 0
-            context['total_sets'] = 0
-
+            
         return context
 
 

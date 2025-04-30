@@ -1,7 +1,7 @@
 <!-- project/templates/project/exercise_list.html -->
 <!--
     Template for displaying a list of exercises.
-    Allows users to filter exercises by muscle group, view details, edit, or delete entries.
+    Allows users to filter exercises by muscle group, edit, or delete entries.
 -->
 
 {% extends 'project/base.html' %}
@@ -36,9 +36,10 @@
                     <strong>Muscle Group:</strong> {{ exercise.muscle_group }}<br>
                     <strong>Equipment:</strong> {{ exercise.equipment }}
                 </p>
-                <a href="{% url 'project:exercise_detail' exercise.pk %}" class="btn btn-primary">View</a>
-                <a href="{% url 'project:exercise_update' exercise.pk %}" class="btn btn-secondary">Edit</a>
-                <a href="{% url 'project:exercise_delete' exercise.pk %}" class="btn btn-danger">Delete</a>
+                <div>
+                    <a href="{% url 'project:exercise_update' exercise.pk %}" class="btn btn-secondary me-2">Edit</a>
+                    <a href="{% url 'project:exercise_delete' exercise.pk %}" class="btn btn-danger">Delete</a>
+                </div>
             </div>
         </div>
     </div>

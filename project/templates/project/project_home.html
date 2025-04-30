@@ -1,0 +1,33 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Project Home</h1>
+
+    <!-- PR Section -->
+    {% if prs %}
+    <div class="mt-4">
+        <h3>Your Personal Records</h3>
+        <div class="row">
+            {% for exercise, weight in prs.items %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ exercise }}</h5>
+                        <p class="card-text">
+                            <strong>Max Weight:</strong> {{ weight }} lbs
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="mt-4">
+        <h3>Your Personal Records</h3>
+        <p>No personal records found. Start logging your workouts to track your progress!</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 
