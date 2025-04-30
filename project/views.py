@@ -204,11 +204,11 @@ class WorkoutSessionCreateView(LoginRequiredMixin, CreateView):
             )
             for i, form in enumerate(context['workout_entry_formset']):
                 form.prefix = f'entries-{i}'
-                form.set_formset(SetFormSet(
+                form.set_formset = SetFormSet(
                     self.request.POST,
                     instance=form.instance,
                     prefix=f'sets-{i}'
-                ))
+                )
         else:
             context['workout_entry_formset'] = WorkoutEntryFormSet(
                 prefix='entries',
@@ -216,10 +216,10 @@ class WorkoutSessionCreateView(LoginRequiredMixin, CreateView):
             )
             for i, form in enumerate(context['workout_entry_formset']):
                 form.prefix = f'entries-{i}'
-                form.set_formset(SetFormSet(
+                form.set_formset = SetFormSet(
                     instance=form.instance,
                     prefix=f'sets-{i}'
-                ))
+                )
         return context
 
     def form_valid(self, form):

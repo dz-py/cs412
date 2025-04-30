@@ -42,6 +42,13 @@ class SetForm(forms.ModelForm):
     class Meta:
         model = Set
         fields = ['set_number', 'reps', 'weight']
+        labels = {
+            'weight': 'Weight (lbs)', 
+        }
+        widgets = {
+            'reps': forms.NumberInput(attrs={'max': 1000, 'min': 1}),
+            'weight': forms.NumberInput(attrs={'max': 2000, 'min': 0}),
+        }
 
 # Factory for creating inline formsets
 WorkoutEntryFormSet = inlineformset_factory(
