@@ -20,7 +20,7 @@
 
     <!-- Buttons to exercises and workouts if logged in -->
     {% if user.is_authenticated %}
-        <p>Get started by viewing exercises or logging your workouts.</p>
+        <p>Get started by adding exercises and then logging your workouts.</p>
         <div class="row">
             <div class="col-md-8">
                 <a href="{% url 'project:exercise_list' %}" class="btn btn-primary btn-lg">Add/View Exercises</a>

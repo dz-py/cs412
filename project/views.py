@@ -268,21 +268,24 @@ class WorkoutSessionCreateView(LoginRequiredMixin, CreateView):
             self.object.save()
 
             for i, workout_entry_form in enumerate(workout_entry_formset.forms):
-                workout_entry = workout_entry_form.save(commit=False)
-                workout_entry.session = self.object
-                workout_entry.save()
+                if workout_entry_form.cleaned_data:  # Only process if there's data
+                    workout_entry = workout_entry_form.save(commit=False)
+                    workout_entry.session = self.object
+                    workout_entry.save()
 
-                set_formset = SetFormSet(
-                    self.request.POST,
-                    instance=workout_entry,
-                    prefix=f'sets-{i}'
-                )
+                    set_formset = SetFormSet(
+                        self.request.POST,
+                        instance=workout_entry,
+                        prefix=f'sets-{i}'
+                    )
 
-                if set_formset.is_valid():
-                    sets = set_formset.save(commit=False)
-                    for set_num, set_instance in enumerate(sets, start=1):
-                        set_instance.set_number = set_num
-                        set_instance.save()
+                    if set_formset.is_valid():
+                        sets = set_formset.save(commit=False)
+                        # Only process non-empty sets (where reps or weight is provided)
+                        valid_sets = [s for s in sets if s.reps or s.weight]
+                        for set_num, set_instance in enumerate(valid_sets, start=1):
+                            set_instance.set_number = set_num
+                            set_instance.save()
 
             return redirect(self.get_success_url())
 

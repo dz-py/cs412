@@ -41,13 +41,13 @@ class SetForm(forms.ModelForm):
     """ Form for creating and editing sets """
     class Meta:
         model = Set
-        fields = ['set_number', 'reps', 'weight']
+        fields = ['reps', 'weight']  # Removed set_number as it will be handled automatically
         labels = {
             'weight': 'Weight (lbs)', 
         }
         widgets = {
-            'reps': forms.NumberInput(attrs={'max': 1000, 'min': 1}),
-            'weight': forms.NumberInput(attrs={'max': 2000, 'min': 0}),
+            'reps': forms.NumberInput(attrs={'max': 1000, 'min': 1, 'class': 'form-control', 'placeholder': 'Reps'}),
+            'weight': forms.NumberInput(attrs={'max': 2000, 'min': 0, 'class': 'form-control', 'placeholder': 'Weight (lbs)'}),
         }
 
 # Factory for creating inline formsets
@@ -63,7 +63,7 @@ SetFormSet = inlineformset_factory(
     WorkoutEntry,
     Set,
     form=SetForm,
-    extra=1,
+    extra=1,  # Start with 1 set form
     can_delete=False
 )
 
