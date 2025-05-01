@@ -6,12 +6,13 @@
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
+from .views import ProjectHomeView
 
 app_name = 'project'
 
 urlpatterns = [
     # Home page
-    path('', views.HomeView.as_view(), name='home'),
+    path('', ProjectHomeView.as_view(), name='project_home'),
     
     # Exercise-related URLs
     path('exercises/', views.ExerciseListView.as_view(), name='exercise_list'),
